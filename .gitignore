@@ -1,0 +1,56 @@
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+*.so
+
+# Folders
+_obj
+_test
+
+# Architecture specific extensions/prefixes
+*.[568vq]
+[568vq].out
+
+*.cgo1.go
+*.cgo2.c
+_cgo_defun.c
+_cgo_gotypes.go
+_cgo_export.*
+
+_testmain.go
+
+# Executables
+*.exe
+*.exe~
+*.dll
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (Safe to ignore if you use Go Modules)
+vendor/
+
+# Go workspace file (used for local development across multiple modules)
+go.work
+go.work.sum
+
+# Environment Files
+.env
+.env.local
+
+# IDE and Editor specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Folders
+tmp/
