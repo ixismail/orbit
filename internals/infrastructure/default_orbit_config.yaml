@@ -1,0 +1,30 @@
+# Orbit Global Configuration
+# ---------------------------------------------------------
+# Changes to this file are hot-reloaded instantly.
+
+global:
+  # Automatically injects wildcard CORS headers for all routes
+  cors_bypass: true       
+  
+  # Automatically generates local SSL certificates for secure contexts
+  auto_tls: true          
+
+routes:
+  # Example 1: Basic Next.js frontend
+  web.app.loc:
+    target: "http://localhost:3000"
+
+  # Example 2: Go microservice with chaos simulation enabled
+  api.app.loc:
+    target: "http://localhost:8080"
+    chaos:
+      # Adds an artificial 200ms delay to all requests
+      latency_ms: 200     
+      
+      # 5% chance of failing the request with a 502 Bad Gateway
+      error_rate_percent: 5
+
+  # Example 3: Overriding global settings for a specific service
+  auth.app.loc:
+    target: "http://localhost:4000"
+    cors_bypass: false # Disable automatic CORS for this specific route
