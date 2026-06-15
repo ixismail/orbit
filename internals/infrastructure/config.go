@@ -6,7 +6,9 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/ixismail/orbit/internals/domains"
 	"github.com/ixismail/orbit/internals/theme"
+	"github.com/spf13/viper"
 )
 
 // Embedding the oribit default config file into the binary
@@ -38,4 +40,32 @@ func ConfigureOrbit() {
 			log.Fatalf(theme.Error.Render("Failed to write default config: %v\n"), err)
 		}
 	}
+}
+
+// LoadConfig reads the config.yaml from the OS and parses it into Domain structs
+func LoadConfig() (*domains.OrbitConfig) {
+
+	configDir, _ := os.UserConfigDir()
+	configFilePath := filepath.Join(configDir, "orbit", "config.yaml")
+
+	// Create a custom Viper instance that uses "::" as a delimiter instead of "." or ":"
+	// This prevents Viper from breaking apart our domain names while reading the config file.
+	v := viper.NewWithOptions(viper.KeyDelimiter("::"))
+
+	// Tell Viper where to look
+	v.SetConfigFile(configFilePath)
+	v.SetConfigType("yaml")
+
+	// Attempt to read the file
+	if err := v.ReadInConfig(); err != nil {
+		log.Fatalf(theme.Error.Render("Failed to read config file: %v\n"), err)
+	}
+
+	// Unmarshal the YAML into Domain structs
+	var config domains.OrbitConfig
+	if err := v.Unmarshal(&config); err != nil {
+		log.Fatalf(theme.Error.Render("Failed to unmarshal config file: %v\n"), err)
+	}
+
+	return &config
 }
